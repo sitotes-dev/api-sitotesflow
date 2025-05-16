@@ -100,7 +100,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(400).json({ error: 'Cannot delete yourself' });
             }
 
-            account.users = account.users.filter(u => u !== delete_user);
+            account.users = account.users.filter((u: { username: string; img: string }) => u !== delete_user);
             writeDB(db);
             return res.status(200).json({ message: 'User alias deleted' });
         }
