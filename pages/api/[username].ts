@@ -19,8 +19,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const dataRaw = fs.readFileSync(dbPath, 'utf-8');
     const data = JSON.parse(dataRaw);
 
-    const account = data.data.account.find((acc: any) =>
-      acc.users.some((user: any) => user.username === username)
+    const account = data.data.account.find((acc: { username: string; img: string }) =>
+      acc.users.some((user: { username: string; img: string }) => user.username === username)
     );
 
     if (!account) {
@@ -29,6 +29,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     return res.status(200).json(account);
   } catch (err) {
-    return res.status(500).json({ error: 'Failed to read database' });
+      console.error('Error reading database:', err);
+      return res.status(500).json({ error: 'Failed to read database' });
   }
 }

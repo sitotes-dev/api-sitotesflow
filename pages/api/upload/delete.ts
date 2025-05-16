@@ -1,5 +1,4 @@
 import { google } from 'googleapis';
-import path from 'path';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { credsGoogle } from '@/lib/cred-ential';
 
@@ -35,6 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await drive.files.delete({ fileId: id });
     return res.status(200).json({ success: true });
   } catch (err) {
-    return res.status(500).json({ error: 'Gagal menghapus file' });
+      console.error('Error deleting file:', err);
+      return res.status(500).json({ error: 'Gagal menghapus file' });
   }
 }

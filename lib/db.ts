@@ -8,6 +8,6 @@ export function readDB() {
   return JSON.parse(data);
 }
 
-export function writeDB(data: any) {
+export function writeDB(data: object) {
   fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
 }

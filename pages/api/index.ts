@@ -45,7 +45,7 @@ export default function handler(req, res) {
                 return res.status(400).json({ error: 'User and transaction are required' });
             }
 
-            const account = data.account.find(acc => acc.users.some((u: any) => u.username === user));
+            const account = data.account.find(acc => acc.users.some((u: { username: string; img: string }) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             account.transaction.push(transaction);
@@ -59,7 +59,7 @@ export default function handler(req, res) {
                 return res.status(400).json({ error: 'User and date are required' });
             }
 
-            const account = data.account.find(acc => acc.users.some((u: any) => u.username === user));
+            const account = data.account.find(acc => acc.users.some((u: { username: string; img: string }) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             account.transaction = account.transaction.filter(t => t.date !== date);
@@ -73,7 +73,7 @@ export default function handler(req, res) {
                 return res.status(400).json({ error: 'User and new_user are required' });
             }
 
-            const account = data.account.find(acc => acc.users.some((u: any) => u.username === user));
+            const account = data.account.find(acc => acc.users.some((u: { username: string; img: string }) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             if (!account.users.includes(new_user)) {
@@ -90,7 +90,7 @@ export default function handler(req, res) {
                 return res.status(400).json({ error: 'User and delete_user are required' });
             }
 
-            const account = data.account.find(acc => acc.users.some((u: any) => u.username === user));
+            const account = data.account.find(acc => acc.users.some((u: { username: string; img: string }) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             if (user === delete_user) {
@@ -112,7 +112,7 @@ export default function handler(req, res) {
                 return res.status(403).json({ error: 'Invalid admin password' });
             }
 
-            const exists = data.account.some(acc => acc.users.some((u: any) => u.username === username));
+            const exists = data.account.some(acc => acc.users.some((u: { username: string; img: string }) => u.username === username));
             if (exists) return res.status(400).json({ error: 'Username already exists' });
 
             user_data.users = [username];

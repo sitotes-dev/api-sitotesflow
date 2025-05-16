@@ -1,3 +1,4 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
 import {
     google
 } from 'googleapis';
@@ -26,8 +27,8 @@ const drive = google.drive({
     version: 'v3',
     auth
 });
-
-export default async function handler(req: any, res: any) { // Fix CORS res.setHeader('Access-Control-Allow-Origin', '*'); res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS'); res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    // Fix CORS res.setHeader('Access-Control-Allow-Origin', '*'); res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS'); res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -82,6 +83,7 @@ export default async function handler(req: any, res: any) { // Fix CORS res.setH
             const list = await listDriveFiles();
             res.status(200).json(list);
         } catch (e) {
+            console.error(e);
             res.status(500).json({
                 error: 'Gagal ambil file'
             });
