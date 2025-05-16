@@ -65,7 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     
                     const existing = await findDriveFileByName(finalFileName);
                     if (existing) {
-                        await deleteFromDrive(existing.id);
+                        await deleteFromDrive(existing.id!);
                     }
                 }
 
