@@ -1,8 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
-// import path from 'path';
+import path from 'path';
 
-const dbPath = '/tmp/db.json';
+const sourcePath = path.join(process.cwd(), 'db.json'); // File asli (read-only)
+const dbPath = '/tmp/db.json'; // File bisa ditulis
+
+// Salin file dari read-only ke tmp jika belum ada
+if (!fs.existsSync(dbPath)) {
+  fs.copyFileSync(sourcePath, dbPath);
+}
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
