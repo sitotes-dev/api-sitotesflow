@@ -114,11 +114,11 @@ async function uploadToDrive(filepath: string, name: string) {
 
     // SET FILE PUBLIC
     await drive.permissions.create({
-        fileId: res.data.id,
-        requestBody: {
-            role: 'reader',
-            type: 'anyone',
-        },
+      fileId: res.data.id!,
+      requestBody: {
+        role: 'reader',
+        type: 'anyone',
+      },
     });
 
     return res.data;
