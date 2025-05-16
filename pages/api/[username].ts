@@ -26,7 +26,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     
     type Account = {
       users: User[];
-      transaction: any[]; // optional: bisa definisikan tipe transaksi seperti sebelumnya
     };
     
     const account = data.data.account.find((acc: Account) =>
