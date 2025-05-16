@@ -5,7 +5,10 @@ import { credsGoogle } from '@/lib/cred-ential';
 const creds = credsGoogle()
 
 const auth = new google.auth.GoogleAuth({
-  creds, // ini sama seperti menuliskan credentials: { client_email, private_key }
+  credentials: {
+    client_email: creds.client_email,
+    private_key: creds.private_key,
+  },
   scopes: ['https://www.googleapis.com/auth/drive.readonly'],
 });
 
@@ -50,6 +53,6 @@ export default async function handler(req, res) {
     response.data.pipe(res);
   } catch (error) {
     console.error('Error fetching file:', error);
-    res.status(500).json({ error: 'Failed to fetch image' });
+    res.status(500).json({ info: 'Failed to fetch image', error });
   }
 }
