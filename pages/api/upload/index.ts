@@ -59,6 +59,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             try {
                 if (autoReplace) {
+                    if (!finalFileName) {
+                      return res.status(400).json({ error: 'Filename is required' });
+                    }
+                    
                     const existing = await findDriveFileByName(finalFileName);
                     if (existing) {
                         await deleteFromDrive(existing.id);
