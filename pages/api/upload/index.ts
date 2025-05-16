@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 error: 'Upload error'
             });
 
-            const file = files.file[0];
+            const file = Array.isArray(files.file) ? files.file[0] : files.file;
             const customName = fields.customName?.[0];
             const autoReplace = fields.autoReplace?.[0] === 'true';
             const finalFileName = customName || file.originalFilename;
