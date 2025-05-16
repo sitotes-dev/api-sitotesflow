@@ -62,7 +62,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(400).json({ error: 'User and date are required' });
             }
 
-            const account = data.account.find(acc => acc.users.some((u) => u.username === user));
+            const account = data.account.find(acc: { users:[] } => acc.users.some((u) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             account.transaction = account.transaction.filter(t => t.date !== date);
