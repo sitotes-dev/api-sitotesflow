@@ -69,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
                 }
 
-                const uploaded = await uploadToDrive(file.filepath, finalFileName);
+                const uploaded = await uploadToDrive(file.filepath, finalFileName!);
                 res.status(200).json({
                     success: true,
                     file: uploaded
