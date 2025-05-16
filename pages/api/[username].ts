@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
 import path from 'path';
 
-const dbPath = path.join(process.cwd(), 'db.json');
+const dbPath = '/tmp/db.json';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
