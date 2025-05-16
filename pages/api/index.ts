@@ -76,7 +76,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(400).json({ error: 'User and new_user are required' });
             }
 
-            const account = data.account.find(acc => acc.users.some((u: { username: string; img: string }) => u.username === user));
+            const account = data.account.find((acc: { users:[] }) => acc.users.some((u: { username: string; img: string }) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             if (!account.users.includes(new_user)) {
@@ -93,7 +93,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(400).json({ error: 'User and delete_user are required' });
             }
 
-            const account = data.account.find(acc => acc.users.some((u: { username: string; img: string }) => u.username === user));
+            const account = data.account.find((acc: { users:[] }) => acc.users.some((u: { username: string; img: string }) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             if (user === delete_user) {
@@ -115,7 +115,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(403).json({ error: 'Invalid admin password' });
             }
 
-            const exists = data.account.some(acc => acc.users.some((u: { username: string; img: string }) => u.username === username));
+            const exists = data.account.some((acc: { users:[] }) => acc.users.some((u: { username: string; img: string }) => u.username === username));
             if (exists) return res.status(400).json({ error: 'Username already exists' });
 
             user_data.users = [username];
