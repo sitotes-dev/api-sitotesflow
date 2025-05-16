@@ -65,7 +65,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             const account = data.account.find((acc: { users:[] }) => acc.users.some((u: {username: string; img: string}) => u.username === user));
             if (!account) return res.status(404).json({ error: 'User not found' });
 
-            account.transaction = account.transaction.filter(t => t.date !== date);
+            account.transaction = account.transaction.filter((t: { jumlah: number;  categ: string; info: string; date: string; by: string}) => t.date !== date);
             writeDB(db);
             return res.status(200).json({ message: 'Transaction deleted' });
         }
