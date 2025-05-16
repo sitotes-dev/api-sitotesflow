@@ -1,0 +1,72 @@
+{
+  "data": {
+    "account": [
+      {
+        "users": [
+          {
+            "username": "lolyy",
+            "img": "1GXRMxa2z7XrgQvcEyh8vNy7iSWV_T4IL"
+          },
+          {
+            "username": "leoo",
+            "img": "1i6PrPKEdtwBhNFnJHYDW2z9GTfaWuM9W"
+          }
+        ],
+        "transaction": [
+          {
+            "jumlah": 11000,
+            "categ": "-",
+            "info": "-",
+            "date": "15-5-2025||20:59:17",
+            "by": "lolyy"
+          },
+          {
+            "jumlah": 11000,
+            "categ": "-",
+            "info": "-",
+            "date": "15-5-2025||20:59:49",
+            "by": "lolyy"
+          },
+          {
+            "jumlah": -100000,
+            "categ": "lain lain",
+            "info": "beli tas",
+            "date": "15-5-2025||21:00:33",
+            "by": "lolyy"
+          },
+          {
+            "jumlah": 5000,
+            "categ": "-",
+            "info": "-",
+            "date": "15-5-2025||21:41:12",
+            "by": "leoo"
+          },
+          {
+            "jumlah": 5000,
+            "categ": "-",
+            "info": "-",
+            "date": "15-5-2025||21:53:11",
+            "by": "leoo"
+          },
+          {
+            "jumlah": 10000,
+            "categ": "-",
+            "info": "-",
+            "date": "15-5-2025||21:53:39",
+            "by": "leoo"
+          },
+          {
+            "jumlah": 10000,
+            "categ": "-",
+            "info": "-",
+            "date": "15-5-2025||21:58:56",
+            "by": "lolyy"
+          }
+        ]
+      }
+    ],
+    "admin": {
+      "pass": "admin123"
+    }
+  }
+}
