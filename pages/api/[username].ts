@@ -19,8 +19,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const dataRaw = fs.readFileSync(dbPath, 'utf-8');
     const data = JSON.parse(dataRaw);
 
-    const account = data.data.account.find((acc: { username: string; img: string }) =>
-      acc.users.some((user: { username: string; img: string }) => user.username === username)
+    type User = {
+      username: string;
+      img: string;
+    };
+    
+    type Account = {
+      users: User[];
+      transaction: any[]; // optional: bisa definisikan tipe transaksi seperti sebelumnya
+    };
+    
+    const account = data.data.account.find((acc: Account) =>
+      acc.users.some((user) => user.username === username)
     );
 
     if (!account) {
