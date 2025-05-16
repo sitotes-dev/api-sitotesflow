@@ -46,7 +46,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(400).json({ error: 'User and transaction are required' });
             }
 
-            const account = data.account.find((acc: { username: string; img: string }) =>
+            const account = data.account.find((acc: { users: { username: string; img: string }[], transaction: [] }) =>
               acc.users.some((u: { username: string; img: string }) => u.username === user)
             );
             if (!account) return res.status(404).json({ error: 'User not found' });
