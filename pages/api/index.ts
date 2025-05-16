@@ -127,9 +127,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
         return res.status(400).json({ error: 'Invalid action' });
     } catch (err) {
+        const error = err as Error;
+    
         return res.status(500).json({
             error: 'Server error',
-            details: err.message || JSON.stringify(err),
+            details: error.message || JSON.stringify(error),
         });
     }
 }
