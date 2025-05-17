@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 const token =
   'g'+'h'+'p_'+'SzC'+'TQA'+'Aae'+'A5jm'+'iWW8Qe'+'Q5VA'+'9qZF'+'bRH'+'0Ttu'+'6W';
 
