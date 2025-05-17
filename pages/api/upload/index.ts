@@ -79,7 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 if (account && autoReplace) {
                     const user = account.users.find((u: { username: string, img: string }) => u.username === finalFileName);
                     if (user) {
-                        user.img = uploaded.file.id;
+                        user.img = uploaded.id!;
                         writeDB(db);
                     }
                 }
