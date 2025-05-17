@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(200).end();
         return;
     }
-    const db = readDB();
+    const db = await readDB();
     const data = db.data;
     if (req.method === 'POST') {
         const form = formidable({
@@ -80,7 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const user = account.users.find((u: { username: string, img: string }) => u.username === finalFileName);
                     if (user) {
                         user.img = uploaded.id!;
-                        writeDB(db);
+                        await writeDB(db);
                     }
                 }
                 res.status(200).json({

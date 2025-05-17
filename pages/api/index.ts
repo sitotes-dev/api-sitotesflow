@@ -1,7 +1,7 @@
 import { readDB, writeDB } from '@/lib/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.status(200).end();
     }
 
-    const db = readDB();
+    const db = await readDB();
     const { action, payload } = req.body || {};
 
     // Validasi awal untuk req.body
@@ -36,7 +36,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(400).json({ error: 'New password is required' });
             }
             data.admin.pass = payload.newpass;
-            writeDB(db);
+            await writeDB(db);
             return res.status(200).json({ message: 'Admin password updated' });
         }
 
@@ -52,7 +52,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             account.transaction.push(transaction);
-            writeDB(db);
+            await writeDB(db);
             return res.status(200).json({ message: 'Transaction added' });
         }
 
@@ -66,7 +66,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             if (!account) return res.status(404).json({ error: 'User not found' });
 
             account.transaction = account.transaction.filter((t: { jumlah: number;  categ: string; info: string; date: string; by: string}) => t.date !== date);
-            writeDB(db);
+            await writeDB(db);
             return res.status(200).json({ message: 'Transaction deleted' });
         }
 
@@ -83,7 +83,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 account.users.push(new_user);
             }
 
-            writeDB(db);
+            await writeDB(db);
             return res.status(200).json({ message: 'User alias added' });
         }
 
@@ -101,7 +101,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             }
 
             account.users = account.users.filter((u: { username: string; img: string }) => u !== delete_user);
-            writeDB(db);
+            await writeDB(db);
             return res.status(200).json({ message: 'User alias deleted' });
         }
 
@@ -121,7 +121,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             user_data.users = [username];
             data.account.push(user_data);
 
-            writeDB(db);
+            await writeDB(db);
             return res.status(200).json({ message: 'New account created' });
         }
 

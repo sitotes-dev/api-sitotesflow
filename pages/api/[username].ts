@@ -1,16 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import fs from 'fs';
-import path from 'path';
+import { readDB } from '@/lib/db'; // Import dari file db.ts kamu
 
-const sourcePath = path.join(process.cwd(), 'db.json'); // File asli (read-only)
-const dbPath = '/tmp/db.json'; // File bisa ditulis
-
-// Salin file dari read-only ke tmp jika belum ada
-if (!fs.existsSync(dbPath)) {
-  fs.copyFileSync(sourcePath, dbPath);
-}
-
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -22,19 +13,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username } = req.query;
 
   try {
-    const dataRaw = fs.readFileSync(dbPath, 'utf-8');
-    const data = JSON.parse(dataRaw);
+    const db = await readDB();
 
     type User = {
       username: string;
       img: string;
     };
-    
+
     type Account = {
       users: User[];
     };
-    
-    const account = data.data.account.find((acc: Account) =>
+
+    const account = db.data.account.find((acc: Account) =>
       acc.users.some((user) => user.username === username)
     );
 
@@ -44,7 +34,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     return res.status(200).json(account);
   } catch (err) {
-      console.error('Error reading database:', err);
-      return res.status(500).json({ error: 'Failed to read database' });
+    console.error('Error reading database:', err);
+    return res.status(500).json({ error: 'Failed to read database' });
   }
 }
