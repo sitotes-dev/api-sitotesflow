@@ -5,7 +5,7 @@ import {
 import formidable from 'formidable';
 import fs from 'fs';
 import { credsGoogle } from '@/lib/cred-ential';
-
+import { readDB, writeDB } from '@/lib/db';
 
 const creds = credsGoogle()
 
@@ -41,7 +41,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(200).end();
         return;
     }
-
+    const db = readDB();
+    const data = db.data;
     if (req.method === 'POST') {
         const form = formidable({
             multiples: false
@@ -70,6 +71,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
 
                 const uploaded = await uploadToDrive(file.filepath, finalFileName!);
+                const account = data.account.find((acc: { users: [] }) =>
+                    acc.users.some((u: { username: string, img: string }) => u.username === finalFileName)
+                );
+                
+                // Jika akun ditemukan dan autoReplace aktif, ubah img user tsb menjadi uploaded.file.id
+                if (account && autoReplace) {
+                    const user = account.users.find((u: { username: string, img: string }) => u.username === finalFileName);
+                    if (user) {
+                        user.img = uploaded.file.id;
+                        writeDB(db);
+                    }
+                }
                 res.status(200).json({
                     success: true,
                     file: uploaded
